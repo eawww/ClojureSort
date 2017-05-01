@@ -36,8 +36,9 @@
    )
 )
 
-;figuring out how to pile all the threading into this one function
-(defn threadulesque-mergsort [numbers threads]
+(defn threadulesque-mergsort 
+  "Lets you specify number of threads (please only powers of 2)"
+  [numbers threads]
   (if (< (count numbers) 2) 
     numbers
     (if (> threads 2)
