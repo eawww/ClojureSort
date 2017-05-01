@@ -36,13 +36,23 @@
    )
 )
 
-(defn double-mergsort [numbers]
-  (if (< (count numbers) 2) numbers
-    (apply merg
-           (pmap mergsort
-                 (split-at (quot (count numbers) 2) numbers)
-            )
-     )
+;figuring out how to pile all the threading into this one function
+(defn threadulesque-mergsort [numbers threads]
+  (if (< (count numbers) 2) 
+    numbers
+    (if (> threads 2)
+	    (apply merg
+	           (pmap threadulesque-mergsort
+	                 (split-at (quot (count numbers) 2) numbers)
+	                 [(quot threads 2) (quot threads 2)]
+	           )
+	    )
+	    (apply merg
+	           (pmap mergsort
+	                 (split-at (quot (count numbers) 2) numbers)
+	            )
+	     )
+	   )
   )
 )
 
