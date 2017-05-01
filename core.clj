@@ -10,7 +10,7 @@
 
 (def numberlst (getlistfromfile)) ;for some dumb reason, we have to do it this way to treat the return of the function as a collection
 
-(defn mrg
+(defn merg
   "merges two sorted lists into one sorted list"
   [leftlst rightlst]
   (loop [lf leftlst rt rightlst result [] ]
@@ -28,11 +28,21 @@
   "just your basic merge sort"
   [numbers]
   (if (< (count numbers) 2) numbers
-         (apply mrg 
+         (apply merg 
           (map mergsort 
-           (split-at(/ (count numbers) 2) numbers)
+           (split-at (quot (count numbers) 2) numbers)
            )
           )
    )
+)
+
+(defn double-mergsort [numbers]
+  (if (< (count numbers) 2) numbers
+    (apply merg
+           (pmap mergsort
+                 (split-at (quot (count numbers) 2) numbers)
+            )
+     )
+  )
 )
 
